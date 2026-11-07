@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node index.js",
+    "build": "node build.js",
     "start": "node index.js"
   },
   "dependencies": {
