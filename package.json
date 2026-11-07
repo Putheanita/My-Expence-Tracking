@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev:backend": "npm run dev --workspace=backend",
-    "build": "npm run build --workspace=frontend && node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive:true}); fs.cpSync('frontend/dist', 'public', {recursive:true});\"",
+    "build": "node build.js",
     "start": "npm start --workspace=backend"
   },
   "devDependencies": {
