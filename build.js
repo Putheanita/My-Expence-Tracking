@@ -5,13 +5,15 @@ import path from 'path';
 console.log('[Build] Building frontend with Vite...');
 execSync('npm run build --workspace=frontend', { stdio: 'inherit' });
 
-const srcDir = path.resolve('frontend/dist');
-const targets = [path.resolve('public'), path.resolve('dist')];
+const publicDir = path.resolve('public');
+const distDir = path.resolve('dist');
+const localDist = path.resolve('frontend/dist');
 
-for (const target of targets) {
-  if (fs.existsSync(srcDir)) {
-    fs.cpSync(srcDir, target, { recursive: true });
-    console.log(`[Build] Copied build files to: ${target}`);
-  }
+if (fs.existsSync(publicDir)) {
+  fs.cpSync(publicDir, distDir, { recursive: true, force: true });
+  fs.cpSync(publicDir, localDist, { recursive: true, force: true });
 }
-console.log('[Build] Done! Build output ready for Vercel.');
+
+console.log('[Build] Done! All output directories (public, dist, frontend/dist) ready for Vercel.');
+
+
