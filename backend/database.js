@@ -6,11 +6,22 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.join(__dirname, 'data');
+const isVercel = !!process.env.VERCEL;
+const DATA_DIR = isVercel ? '/tmp/data' : path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'expenses.db');
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+// If running in Vercel serverless environment, copy seed database to /tmp if available
+const localSeedDb = path.join(__dirname, 'data', 'expenses.db');
+if (isVercel && fs.existsSync(localSeedDb) && !fs.existsSync(DB_PATH)) {
+  try {
+    fs.copyFileSync(localSeedDb, DB_PATH);
+  } catch (e) {
+    console.warn('[Database] Initializing fresh SQLite db in /tmp:', e);
+  }
 }
 
 export const db = new DatabaseSync(DB_PATH);

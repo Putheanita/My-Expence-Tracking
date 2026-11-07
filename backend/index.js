@@ -128,7 +128,11 @@ app.use((req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`[SQLite Backend Server] Running on http://localhost:${PORT}`);
-  console.log(`[Database File] Ready at data/expenses.db`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`[SQLite Backend Server] Running on http://localhost:${PORT}`);
+    console.log(`[Database File] Ready at data/expenses.db`);
+  });
+}
+
+export default app;
