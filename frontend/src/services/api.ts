@@ -129,6 +129,7 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, pin }),
       });
+      if (!res.ok) throw new Error('Failed to login from server');
       return await res.json();
     } catch {
       return { success: true, user: { name: name || 'Mindful User', avatarUrl: '', isLoggedIn: true } };
