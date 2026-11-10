@@ -12,12 +12,13 @@ export default defineConfig({
       closeBundle() {
         try {
           const base = import.meta.dirname || process.cwd()
-          const rootPublic = path.resolve(base, '../public')
-          const rootDist = path.resolve(base, '../dist')
           const localDist = path.resolve(base, 'dist')
-          if (fs.existsSync(rootPublic)) {
-            fs.cpSync(rootPublic, rootDist, { recursive: true, force: true })
-            fs.cpSync(rootPublic, localDist, { recursive: true, force: true })
+          const rootDist = path.resolve(base, '../dist')
+          const rootPublic = path.resolve(base, '../public')
+
+          if (fs.existsSync(localDist)) {
+            fs.cpSync(localDist, rootDist, { recursive: true, force: true })
+            fs.cpSync(localDist, rootPublic, { recursive: true, force: true })
           }
         } catch (err) {
           console.warn('[Build] Warning copying build artifacts:', err)
@@ -26,7 +27,7 @@ export default defineConfig({
     },
   ],
   build: {
-    outDir: '../public',
+    outDir: 'dist',
     emptyOutDir: true,
   },
   server: {
