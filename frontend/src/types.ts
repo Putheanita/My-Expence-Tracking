@@ -1,4 +1,4 @@
-export type ExpenseCategory = string; // Supports standard + user-created custom categories
+export type ExpenseCategory = string;
 
 export type ExpenseCadence = 'daily' | 'one-time' | 'flexible';
 
@@ -43,12 +43,12 @@ export interface UserProfile {
 }
 
 export interface BudgetSettings {
-  salary: number; // e.g. $350
-  totalExpenseBudget: number; // $246 (or auto-sum of category targets)
+  salary: number; 
+  totalExpenseBudget: number; 
   currencySymbol: string;
-  cycleResetDay: number; // e.g. 5 (5th of each month)
-  savingsPin: string; // Default: '1234'
-  hideSalary: boolean; // Blur salary by default
+  cycleResetDay: number; 
+  savingsPin: string; 
+  hideSalary: boolean; 
   user: UserProfile;
 }
 
