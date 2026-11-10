@@ -13,12 +13,20 @@ export default defineConfig({
         try {
           const base = import.meta.dirname || process.cwd()
           const localDist = path.resolve(base, 'dist')
-          const rootDist = path.resolve(base, '../dist')
-          const rootPublic = path.resolve(base, '../public')
+          const targets = [
+            path.resolve(base, '../dist'),
+            path.resolve(base, '../public'),
+            path.resolve(base, 'public'),
+            path.resolve(base, 'frontend/dist'),
+            path.resolve(base, '../frontend/dist'),
+          ]
 
           if (fs.existsSync(localDist)) {
-            fs.cpSync(localDist, rootDist, { recursive: true, force: true })
-            fs.cpSync(localDist, rootPublic, { recursive: true, force: true })
+            for (const target of targets) {
+              try {
+                fs.cpSync(localDist, target, { recursive: true, force: true })
+              } catch (_) {}
+            }
           }
         } catch (err) {
           console.warn('[Build] Warning copying build artifacts:', err)
